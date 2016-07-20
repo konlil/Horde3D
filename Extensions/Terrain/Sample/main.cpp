@@ -33,6 +33,7 @@ bool setupWindow( int, int, bool );
 static bool running;
 static double t0;
 static int mx0, my0;
+static bool draging = false;
 static Application *app;
 
 
@@ -130,10 +131,27 @@ void mouseMoveListener( int x, int y )
 		return;
 	}
 
-	app->mouseMoveEvent( (float)(x - mx0), (float)(my0 - y) );
+	if (draging)
+	{
+		app->mouseMoveEvent( (float)(x - mx0), (float)(my0 - y) );
+	}
 	mx0 = x; my0 = y;
 }
 
+void mouseButtonListener(int button, int action)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		if (action == GLFW_PRESS)
+		{
+			draging = true;
+		}
+		else
+		{
+			draging = false;
+		}
+	}
+}
 
 bool setupWindow( int width, int height, bool fullscreen )
 {
@@ -151,7 +169,8 @@ bool setupWindow( int width, int height, bool fullscreen )
 	glfwSetWindowCloseCallback( windowCloseListener );
 	glfwSetKeyCallback( keyPressListener );
 	glfwSetMousePosCallback( mouseMoveListener );
-	
+	glfwSetMouseButtonCallback(mouseButtonListener);
+
 	return true;
 }
 
@@ -191,7 +210,7 @@ int main( int argc, char** argv )
 	}
 	app->resize( appWidth, appHeight );
 
-	glfwDisable( GLFW_MOUSE_CURSOR );
+	//glfwDisable( GLFW_MOUSE_CURSOR );
 
 	int frames = 0;
 	float fps = 30.0f;
