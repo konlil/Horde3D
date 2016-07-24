@@ -28,6 +28,7 @@ const int appWidth = 1024;
 const int appHeight = 576;
 static bool fullScreen = false;
 static int benchmarkLength = 600;
+static bool draging = false;
 
 bool setupWindow( int, int, bool );
 static bool running;
@@ -122,16 +123,34 @@ void keyPressListener( int key, int action )
 }
 
 
-void mouseMoveListener( int x, int y )
+void mouseMoveListener(int x, int y)
 {
-	if( !running )
+	if (!running)
 	{
 		mx0 = x; my0 = y;
 		return;
 	}
 
-	app->mouseMoveEvent( (float)(x - mx0), (float)(my0 - y) );
+	if (draging)
+	{
+		app->mouseMoveEvent((float)(x - mx0), (float)(my0 - y));
+	}
 	mx0 = x; my0 = y;
+}
+
+void mouseButtonListener(int button, int action)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		if (action == GLFW_PRESS)
+		{
+			draging = true;
+		}
+		else
+		{
+			draging = false;
+		}
+	}
 }
 
 
@@ -151,6 +170,7 @@ bool setupWindow( int width, int height, bool fullscreen )
 	glfwSetWindowCloseCallback( windowCloseListener );
 	glfwSetKeyCallback( keyPressListener );
 	glfwSetMousePosCallback( mouseMoveListener );
+	glfwSetMouseButtonCallback(mouseButtonListener);
 	
 	return true;
 }
@@ -191,7 +211,7 @@ int main( int argc, char** argv )
 	}
 	app->resize( appWidth, appHeight );
 
-	glfwDisable( GLFW_MOUSE_CURSOR );
+	//glfwDisable( GLFW_MOUSE_CURSOR );
 
 	int frames = 0;
 	float fps = 30.0f;
