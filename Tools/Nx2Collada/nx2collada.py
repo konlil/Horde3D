@@ -1,12 +1,12 @@
 #coding:utf8
 
-import neoxloader
+import nxloader
 import collada as cld
 import numpy
 
 
 def Convert(gim_file):
-	mesh_data = neoxloader.LoadMeshData(gim_file)
+	mesh_data = nxloader.LoadMeshData(gim_file)
 
 	mesh = cld.Collada()
 	effect = cld.material.Effect("effect0", [], "phong", diffuse=(1,0,0), specular=(0,1,0))
@@ -38,7 +38,7 @@ def Convert(gim_file):
 	myscene = cld.scene.Scene("myscene", [node])
 	mesh.scenes.append(myscene)
 	mesh.scene = myscene
-	mesh.write('mogu.dae')
+	mesh.write('tree.dae')
 
 
 def TestCollada():
@@ -79,6 +79,6 @@ def TestCollada():
 
 	
 if __name__ == '__main__':
-	Convert(r'E:\H35\trunk\client\res\model\choosecharactor\dengljm_mogu_01.gim')
+	Convert(r'E:\H35\trunk\client\res\model\fb\heiwhdch\zw\fb_haidc_tree001_1221.gim')
 	# Convert(r'E:\H35\trunk\client\res\model\col_model\redbox.gim')
 	# TestCollada()

@@ -486,4 +486,6 @@ class MeshSkeletalData(object):
 
 
 if __name__ == "__main__":
-	pass
+	#print LoadMeshData(r'C:\Work\H35\trunk\client\res\model\col_model\greenbox.gim')
+	# print LoadMeshData(r'E:\H35\trunk\client\res\model\choosecharactor\dengljm_mogu_01.gim')
+	print LoadMeshData(r'E:\H35\trunk\client\res\model\fb\heiwhdch\zw\fb_haidc_tree001_1221.gim')
